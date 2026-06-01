@@ -1,90 +1,390 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>My S3 Static App</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiteDash | Fast Food Delivery</title>
+    <script src="https://cdn.jsdelivr.net/npm/lucide@0.344.0/dist/umd/lucide.min.js"></script>
+    <style>
+        :root {
+            --primary: #ff4757;
+            --primary-hover: #e84118;
+            --dark: #2f3542;
+            --light: #f1f2f6;
+            --white: #ffffff;
+            --grey: #747d8c;
+        }
 
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-    body {
-      height: 100vh;
-      background: linear-gradient(135deg, #667eea, #764ba2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-    }
+        body {
+            background-color: var(--light);
+            color: var(--dark);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
-    .container {
-      backdrop-filter: blur(15px);
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 20px;
-      padding: 40px;
-      width: 90%;
-      max-width: 500px;
-      text-align: center;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.2);
-    }
+        /* Navbar */
+        header {
+            background: var(--white);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
 
-    h1 {
-      font-size: 2.2rem;
-      margin-bottom: 10px;
-    }
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 2rem;
+        }
 
-    p {
-      opacity: 0.9;
-      margin-bottom: 25px;
-    }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
 
-    .btn {
-      display: inline-block;
-      padding: 12px 25px;
-      border-radius: 25px;
-      background: white;
-      color: #333;
-      font-weight: bold;
-      text-decoration: none;
-      transition: all 0.3s ease;
-    }
+        .cart-btn {
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 20px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            transition: background 0.2s;
+        }
 
-    .btn:hover {
-      background: #f1f1f1;
-      transform: scale(1.05);
-    }
+        .cart-btn:hover {
+            background: var(--primary-hover);
+        }
 
-    footer {
-      margin-top: 20px;
-      font-size: 0.8rem;
-      opacity: 0.7;
-    }
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80') center/cover;
+            color: var(--white);
+            text-align: center;
+            padding: 6rem 2rem;
+        }
 
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 1.8rem;
-      }
-    }
-  </style>
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+            flex: 1;
+        }
+
+        .section-title {
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            position: relative;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Food Cards */
+        .card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-desc {
+            color: var(--grey);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            height: 40px;
+            overflow: hidden;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--dark);
+        }
+
+        .add-btn {
+            background: var(--light);
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .add-btn:hover {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        /* Sidebar Cart */
+        .cart-sidebar {
+            position: fixed;
+            top: 0;
+            right: -400px;
+            width: 400px;
+            height: 100vh;
+            background: var(--white);
+            box-shadow: -5px 0 15px rgba(0,0,0,0.1);
+            transition: right 0.3s ease;
+            z-index: 200;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .cart-sidebar.open {
+            right: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--light);
+            padding-bottom: 1rem;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        .cart-items {
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--light);
+        }
+
+        .cart-footer-panel {
+            border-top: 1px solid var(--light);
+            padding-top: 1rem;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: var(--primary);
+            color: var(--white);
+            border: none;
+            padding: 1rem;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* Notification */
+        .notification {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #2ed573;
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            display: none;
+            z-index: 300;
+        }
+    </style>
 </head>
-
 <body>
 
-  <div class="container">
-    <h1>🚀 Welcome to My S3 App</h1>
-    <p>Deployed using Amazon S3 Static Website Hosting</p>
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <i data-lucide="utensils"></i> BiteDash
+            </div>
+            <button class="cart-btn" onclick="toggleCart()">
+                <i data-lucide="shopping-cart"></i> Cart (<span id="cart-count">0</span>)
+            </button>
+        </div>
+    </header>
 
-    <a href="#" class="btn">Explore</a>
+    <section class="hero">
+        <h1>Hungry? We Got You Covered.</h1>
+        <p>The fastest delivery in town, straight to your doorstep.</p>
+    </section>
 
-    <footer>
-      Powered by AWS S3 | DevOps Ready ⚙️
-    </footer>
-  </div>
+    <main class="container">
+        <h2 class="section-title">Popular Dishes</h2>
+        <div class="grid" id="food-grid">
+            </div>
+    </main>
 
+    <div class="cart-sidebar" id="cart-sidebar">
+        <div class="cart-header">
+            <h2>Your Order</h2>
+            <button class="close-btn" onclick="toggleCart()"><i data-lucide="x"></i></button>
+        </div>
+        <div class="cart-items" id="cart-items-container">
+            </div>
+        <div class="cart-footer-panel">
+            <div class="total-row">
+                <span>Total:</span>
+                <span id="cart-total">$0.00</span>
+            </div>
+            <button class="checkout-btn" onclick="checkout()">Place Order</button>
+        </div>
+    </div>
+
+    <div class="notification" id="notification">Added to cart!</div>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        const foods = [
+            { id: 1, name: 'Cheese Burst Burger', price: 8.99, desc: 'Juicy beef patty with loaded melted cheddar cheese.', img: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=400&q=80' },
+            { id: 2, name: 'Pepperoni Supreme Pizza', price: 14.99, desc: 'Freshly baked crust topped with premium pepperoni.', img: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=400&q=80' },
+            { id: 3, name: 'Crunchy Spicy Tacos', price: 6.49, desc: 'Three hard-shell tacos served with fresh salsa.', img: 'https://images.unsplash.com/photo-1565299585323-38d6b0865b47?auto=format&fit=crop&w=400&q=80' },
+            { id: 4, name: 'Creamy Alfredo Pasta', price: 11.99, desc: 'Penne pasta tossed in rich parmesan cream sauce.', img: 'https://images.unsplash.com/photo-1645112411341-6c4fd023714a?auto=format&fit=crop&w=400&q=80' }
+        ];
+
+        let cart = [];
+
+        function renderFoods() {
+            const grid = document.getElementById('food-grid');
+            grid.innerHTML = foods.map(food => `
+                <div class="card">
+                    <img src="${food.img}" alt="${food.name}" class="card-img">
+                    <div class="card-body">
+                        <h3 class="card-title">${food.name}</h3>
+                        <p class="card-desc">${food.desc}</p>
+                        <div class="card-footer">
+                            <span class="price">$${food.price}</span>
+                            <button class="add-btn" onclick="addToCart(${food.id})">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addToCart(id) {
+            const item = foods.find(f => f.id === id);
+            cart.push(item);
+            updateCart();
+            showNotification();
+        }
+
+        function updateCart() {
+            document.getElementById('cart-count').innerText = cart.length;
+            const container = document.getElementById('cart-items-container');
+            
+            if(cart.length === 0) {
+                container.innerHTML = '<p style="color: var(--grey)">Your cart is empty.</p>';
+            } else {
+                container.innerHTML = cart.map((item, index) => `
+                    <div class="cart-item">
+                        <div>
+                            <h4>${item.name}</h4>
+                            <small style="color: var(--primary)">$${item.price}</small>
+                        </div>
+                        <button class="close-btn" style="color: var(--primary)" onclick="removeFromCart(${index})">Remove</button>
+                    </div>
+                `).join('');
+            }
+
+            const total = cart.reduce((sum, item) => sum + item.price, 0);
+            document.getElementById('cart-total').innerText = `$${total.toFixed(2)}`;
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCart();
+        }
+
+        function toggleCart() {
+            document.getElementById('cart-sidebar').classList.toggle('open');
+        }
+
+        function showNotification() {
+            const notif = document.getElementById('notification');
+            notif.style.display = 'block';
+            setTimeout(() => { notif.style.display = 'none'; }, 2000);
+        }
+
+        function checkout() {
+            if(cart.length === 0) return alert('Your cart is empty!');
+            alert('🎉 Order Placed Successfully! Your food is on the way.');
+            cart = [];
+            updateCart();
+            toggleCart();
+        }
+
+        renderFoods();
+    </script>
 </body>
 </html>
