@@ -10,13 +10,13 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:Arial, sans-serif;
+    font-family:'Segoe UI',sans-serif;
 }
 
 body{
     height:100vh;
     overflow:hidden;
-    background:#ffd6e7;
+    background:linear-gradient(135deg,#ffd6e7,#ffe4ef,#ffd1dc);
     display:flex;
     justify-content:center;
     align-items:center;
@@ -24,39 +24,39 @@ body{
 
 .container{
     text-align:center;
-}
-
-h1{
-    color:#ff2d75;
-    font-size:3rem;
-    margin-bottom:30px;
+    padding:40px;
 }
 
 .teddy{
     font-size:120px;
-    margin-bottom:20px;
+    animation:bounce 2s infinite;
+}
+
+h1{
+    color:#ff2f7b;
+    font-size:3rem;
+    margin:20px 0;
 }
 
 .buttons{
-    position:relative;
-    width:400px;
-    height:180px;
-    margin:auto;
+    margin-top:30px;
 }
 
 button{
-    padding:15px 35px;
     border:none;
     border-radius:50px;
-    cursor:pointer;
-    font-size:20px;
+    padding:15px 40px;
+    font-size:22px;
     font-weight:bold;
-    transition:0.2s;
+    cursor:pointer;
+    transition:.3s;
 }
 
 #yesBtn{
     background:#ff4f8b;
     color:white;
+    margin-right:20px;
+    box-shadow:0 8px 20px rgba(255,79,139,.3);
 }
 
 #yesBtn:hover{
@@ -64,93 +64,127 @@ button{
 }
 
 #noBtn{
-    position:absolute;
-    left:240px;
-    top:0;
-    background:#ffffff;
+    position:fixed;
+    background:white;
     color:#ff4f8b;
+    box-shadow:0 8px 20px rgba(0,0,0,.15);
+    left:60%;
+    top:60%;
+    user-select:none;
 }
 
 .success{
     display:none;
-    animation:pop 0.5s ease;
+    text-align:center;
+}
+
+.success .big-teddy{
+    font-size:180px;
+    animation:bounce 1.5s infinite;
 }
 
 .success h2{
-    color:#ff2d75;
-    font-size:2.5rem;
+    color:#ff2f7b;
+    font-size:3rem;
     margin-top:20px;
 }
 
 .success p{
-    font-size:1.3rem;
+    color:#555;
+    font-size:1.4rem;
     margin-top:10px;
-    color:#444;
 }
 
-@keyframes pop{
-    from{
-        transform:scale(0);
-        opacity:0;
+@keyframes bounce{
+    0%,100%{
+        transform:translateY(0);
     }
-    to{
-        transform:scale(1);
-        opacity:1;
+    50%{
+        transform:translateY(-15px);
     }
 }
 </style>
 </head>
+
 <body>
 
 <div class="container" id="proposal">
+
     <div class="teddy">🧸</div>
+
     <h1>Will You Marry Me? 💍❤️</h1>
 
-    <div class="buttons" id="buttonArea">
-        <button id="yesBtn">Yes ❤️</button>
-        <button id="noBtn">No 😢</button>
+    <div class="buttons">
+        <button id="yesBtn">YES ❤️</button>
     </div>
+
 </div>
 
+<button id="noBtn">NO 😭</button>
+
 <div class="success" id="success">
-    <div style="font-size:150px;">🧸</div>
-    <h2>Congratulations! ❤️</h2>
-    <p>Order Placed Successfully Teddy 🧸🎉</p>
+    <div class="big-teddy">🧸</div>
+    <h2>Congratulations! 🎉❤️</h2>
+    <p>Order Placed Successfully Teddy 🧸💝</p>
 </div>
 
 <script>
-const noBtn = document.getElementById("noBtn");
-const area = document.getElementById("buttonArea");
 
-area.addEventListener("mousemove", (e) => {
+const noBtn = document.getElementById("noBtn");
+
+// Random teleport function
+function moveButton() {
+
+    const maxX = window.innerWidth - noBtn.offsetWidth - 20;
+    const maxY = window.innerHeight - noBtn.offsetHeight - 20;
+
+    const x = Math.random() * maxX;
+    const y = Math.random() * maxY;
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+}
+
+// Move continuously when mouse comes near
+document.addEventListener("mousemove",(e)=>{
 
     const rect = noBtn.getBoundingClientRect();
 
-    const btnX = rect.left + rect.width/2;
-    const btnY = rect.top + rect.height/2;
+    const centerX = rect.left + rect.width/2;
+    const centerY = rect.top + rect.height/2;
 
-    const distance = Math.hypot(
-        e.clientX - btnX,
-        e.clientY - btnY
-    );
+    const dx = e.clientX - centerX;
+    const dy = e.clientY - centerY;
 
-    if(distance < 120){
+    const distance = Math.sqrt(dx*dx + dy*dy);
 
-        const maxX = area.clientWidth - noBtn.offsetWidth;
-        const maxY = area.clientHeight - noBtn.offsetHeight;
-
-        const randomX = Math.random() * maxX;
-        const randomY = Math.random() * maxY;
-
-        noBtn.style.left = randomX + "px";
-        noBtn.style.top = randomY + "px";
+    if(distance < 250){
+        moveButton();
     }
 });
 
-document.getElementById("yesBtn").addEventListener("click", () => {
-    document.getElementById("proposal").style.display = "none";
-    document.getElementById("success").style.display = "block";
+// Extra protection
+noBtn.addEventListener("mouseenter",moveButton);
+noBtn.addEventListener("mouseover",moveButton);
+noBtn.addEventListener("mousedown",moveButton);
+document.addEventListener("touchstart",moveButton);
+document.addEventListener("touchmove",moveButton);
+
+// Impossible to click
+noBtn.addEventListener("click",(e)=>{
+    e.preventDefault();
+    moveButton();
 });
+
+// YES button
+document.getElementById("yesBtn").addEventListener("click",()=>{
+
+    document.getElementById("proposal").style.display="none";
+    document.getElementById("noBtn").style.display="none";
+
+    document.getElementById("success").style.display="block";
+});
+
 </script>
 
 </body>
