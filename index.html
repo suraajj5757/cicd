@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Suraj Eats | Premium Food Delivery</title>
+    <title>Suraj Woodlands | Authentic South Indian Flavors</title>
     <style>
         :root {
-            --primary: #ff4757;
-            --dark: #2f3542;
-            --light: #f1f2f6;
+            --primary: #d63031; /* Rich Maroon */
+            --accent: #e1b12c;  /* Deep Mustard Gold */
+            --dark: #2c3e50;    /* Charcoal Slate */
+            --light: #f9f8f6;   /* Warm Ivory Off-White */
         }
         
         * {
@@ -19,7 +20,7 @@
         }
 
         body {
-            background-color: #f8f9fa;
+            background-color: var(--light);
             color: var(--dark);
         }
 
@@ -33,16 +34,20 @@
             position: sticky;
             top: 0;
             z-index: 100;
+            border-bottom: 3px solid var(--accent);
         }
 
         .logo {
             font-size: 24px;
             font-weight: bold;
             color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
 
         .hero {
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=1200&q=80');
+            background: linear-gradient(rgba(0,0,0,0.55), rgba(0,0,0,0.65)), url('https://images.unsplash.com/photo-1668236543090-82eba5ee5976?auto=format&fit=crop&w=1200&q=80');
             background-size: cover;
             background-position: center;
             height: 400px;
@@ -58,12 +63,14 @@
         .hero h1 {
             font-size: 48px;
             margin-bottom: 15px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+            color: var(--accent);
         }
 
         .hero p {
             font-size: 20px;
             margin-bottom: 25px;
+            font-style: italic;
         }
 
         .btn {
@@ -75,11 +82,13 @@
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
-            transition: transform 0.2s;
+            transition: all 0.2s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
         .btn:hover {
             transform: scale(1.05);
+            background: #b22222;
         }
 
         .container {
@@ -91,8 +100,9 @@
         .section-title {
             font-size: 28px;
             margin-bottom: 30px;
-            border-left: 5px solid var(--primary);
+            border-left: 5px solid var(--accent);
             padding-left: 15px;
+            color: var(--primary);
         }
 
         .grid {
@@ -105,8 +115,9 @@
             background: white;
             border-radius: 15px;
             overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-            transition: translateY 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.06);
+            transition: transform 0.3s;
+            border: 1px solid rgba(0,0,0,0.05);
         }
 
         .card:hover {
@@ -126,6 +137,7 @@
         .card-title {
             font-size: 20px;
             margin-bottom: 10px;
+            color: var(--dark);
         }
 
         .card-meta {
@@ -142,7 +154,7 @@
         }
 
         .rating {
-            background: #ffcc00;
+            background: var(--accent);
             color: #000;
             padding: 3px 8px;
             border-radius: 5px;
@@ -154,57 +166,5 @@
 <body>
 
     <header>
-        <div class="logo">⚡ Suraj Eats</div>
+        <div class="logo">🌿 Suraj Woodlands</div>
         <button class="btn" onclick="alert('Cart functionality coming soon!')">View Cart (0)</button>
-    </header>
-
-    <div class="hero">
-        <h1>Hungry? We've Got You Covered.</h1>
-        <p>The fastest food delivery in town, straight to your doorstep.</p>
-        <button class="btn" onclick="document.getElementById('menu').scrollIntoView({behavior: 'smooth'})">Explore Menu</button>
-    </div>
-
-    <div class="container" id="menu">
-        <h2 class="section-title">Popular Dishes</h2>
-        
-        <div class="grid">
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=500&q=80" alt="Pizza" class="card-img">
-                <div class="card-content">
-                    <h3 class="card-title">Gourmet Pepperoni Pizza</h3>
-                    <p>Fresh mozzarella, spicy pepperoni, and aromatic basil on a wood-fired crust.</p>
-                    <div class="card-meta">
-                        <span class="price">$14.99</span>
-                        <span class="rating">★ 4.8</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=500&q=80" alt="Burger" class="card-img">
-                <div class="card-content">
-                    <h3 class="card-title">Classic Smash Burger</h3>
-                    <p>Double beef patty, melted cheddar cheese, special sauce, and toasted brioche bun.</p>
-                    <div class="card-meta">
-                        <span class="price">$10.99</span>
-                        <span class="rating">★ 4.9</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="card">
-                <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=500&q=80" alt="Salad" class="card-img">
-                <div class="card-content">
-                    <h3 class="card-title">Fresh Salmon Avocado Bowl</h3>
-                    <p>Organic greens, grilled Atlantic salmon, creamy avocado slices, and citrus dressing.</p>
-                    <div class="card-meta">
-                        <span class="price">$13.50</span>
-                        <span class="rating">★ 4.6</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-</body>
-</html>
