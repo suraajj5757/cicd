@@ -3,7 +3,7 @@ pipeline {
 
     environment {
         AWS_DEFAULT_REGION = 'us-east-1'
-        S3_BUCKET = 'clahantech2026'
+        S3_BUCKET = 'surajstatic'
         CLOUDFRONT_DISTRIBUTION_ID = 'E60GJW85YNVGL'
     }
 
@@ -12,7 +12,7 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 git branch: 'main',
-                url: 'https://github.com/nexgen369/Frontend_Batch02'
+                url: 'hhttps://github.com/suraajj5757/cicd.git'
             }
         }
 
